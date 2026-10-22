@@ -29,8 +29,8 @@ Subscribe by URL so your blocker picks up updates automatically.
 
 | Blocker | Status |
 | --- | --- |
-| [uBlock Origin Lite](#ublock-origin-lite) (Chrome, Edge and other Chromium browsers) | Working in maintainer testing with the setup below |
-| [uBlock Origin](#ublock-origin) | Core rules briefly tested |
+| [uBlock Origin Lite](#ublock-origin-lite) (Chrome, Edge and other Chromium browsers) | Tested and works |
+| [uBlock Origin](#ublock-origin) | Tested and works |
 | [AdGuard Browser Extension](#adguard-browser-extension) | Setup per AdGuard's documentation; not tested with this list |
 
 ## uBlock Origin Lite
