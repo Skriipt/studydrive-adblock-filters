@@ -1,0 +1,27 @@
+[Adblock Plus 2.0]
+! Title: Studydrive – Ads and Premium Prompts
+! Version: 2026.10.23.1
+! Expires: 1 day
+! Homepage: https://github.com/Skriipt/studydrive-adblock-filters
+! License: MIT
+! Intended for full uBlock Origin. See README for other blockers.
+! Derived from shipped site code; briefly smoke-tested by a user.
+
+! Block Google Ad Manager scripts and delivery on Studydrive.
+||pagead2.googlesyndication.com^$domain=studydrive.net
+||securepubads.g.doubleclick.net^$domain=studydrive.net
+
+! Hide dashboard/newsfeed ad placements, including adblock fallback banners.
+studydrive.net##.feed-placement
+
+! Remove the dashboard ad wrapper and its spacing when the slot is present.
+studydrive.net##[data-testid="dashboard-index-view"] .mx-auto.mb-8:has(> .feed-placement)
+
+! Hide the large dashboard Premium banner and spacing; keep the sidebar link.
+studydrive.net##[data-testid="dashboard-index-view"] .mx-auto.mb-8:has(.logo-studydrive-premium[data-testid="sidebar-logo-studydrive"])
+
+! Prevent document fullscreen ads before they open and lock scrolling.
+! Reset the document counter to 32767 on each full page load.
+! Clear any existing close countdown.
+studydrive.net##+js(set-cookie, sd_fp_docs_left, 32767)
+studydrive.net##+js(set-cookie, sd_fp_until, 0)

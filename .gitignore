@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# Keep investigation captures, third-party bundles and local verification private.
+evidence/
+verify-filters.mjs
+STUDYDRIVE-ANALYSE.md
