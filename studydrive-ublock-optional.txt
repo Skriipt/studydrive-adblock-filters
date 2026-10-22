@@ -1,8 +1,0 @@
-[Adblock Plus 2.0]
-! Title: Studydrive – Optional Marketing Banner
-! Version: 2026.10.23.1
-! Expires: 1 day
-! Homepage: https://github.com/Skriipt/studydrive-adblock-filters
-! License: MIT
-! Optional addition to the main list: hide the Braze dashboard marketing banner.
-studydrive.net###dashboard-braze-banner-container

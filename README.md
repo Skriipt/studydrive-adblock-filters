@@ -1,90 +1,88 @@
-# Studydrive adblock filters
+<div align="center">
 
-Filter lists that remove ads and "please disable your adblocker" banners on Studydrive (`studydrive.net`). Written for uBlock Origin syntax.
+# Studydrive Adblock Filters
 
-This is a standalone project. It is not affiliated with, endorsed by, or connected to Studydrive.
+A small filter list that removes ads, Premium prompts and anti-adblock banners from Studydrive.
 
-## Files
+[Filter list URL](#filter-list-url) · [uBO Lite](#ublock-origin-lite) · [uBlock Origin](#ublock-origin) · [AdGuard](#adguard-browser-extension)
 
-- `studydrive-ublock.txt` is the main list. It blocks Google Ad Manager requests on Studydrive, hides the dashboard ad slot and its adblock fallback banner, hides the large "Download documents with Premium" banner (the sidebar Premium link stays), and stops the full-screen ad on document pages by setting two cookies on page load.
-- `studydrive-ublock-optional.txt` is optional. It only hides the Braze marketing banner on the dashboard.
+</div>
 
-## List URLs
+## What it does
 
-Main list (use this one):
+- Blocks Google ad delivery on `studydrive.net`
+- Hides dashboard and newsfeed ad slots, including their "please disable your adblocker" fallback graphics
+- Hides the large "Download documents with Premium" banner and a separate dashboard marketing banner
+- Stops the full-screen ad on document pages before it opens and locks scrolling
+
+The list only changes what you see. It does not affect your account, Premium status or download rights, and the sidebar Premium link stays in place.
+
+Not affiliated with or endorsed by Studydrive.
+
+## Filter list URL
 
 ```
 https://raw.githubusercontent.com/Skriipt/studydrive-adblock-filters/main/studydrive-ublock.txt
 ```
 
-Optional list:
+Subscribe by URL so your blocker picks up updates automatically.
 
-```
-https://raw.githubusercontent.com/Skriipt/studydrive-adblock-filters/main/studydrive-ublock-optional.txt
-```
-
-Subscribing by URL is the simplest option, because the list can update itself. Only add lists from sources you trust.
-
-## uBlock Origin (full version)
-
-This is the intended target. See the [uBO Filter lists](https://github.com/gorhill/uBlock/wiki/Dashboard:-Filter-lists) and [My filters](https://github.com/gorhill/uBlock/wiki/Dashboard:-My-filters) docs.
-
-**Method 1: subscribe by URL (recommended)**
-
-1. Open the uBlock Origin dashboard (click its icon, then the cogwheel).
-2. Go to **Filter lists** and scroll to **Custom**.
-3. Tick **Import…**, paste the main list URL, and click **Apply changes**.
-4. Reload Studydrive completely (Ctrl+Shift+R, or Cmd+Shift+R on Mac).
-
-**Method 2: paste the rules**
-
-1. Open `studydrive-ublock.txt` and copy its content.
-2. In the dashboard, open **My filters** and make sure **Enable my custom filters** is ticked there.
-3. Paste the rules, click **Apply changes**, then reload Studydrive completely.
+| Blocker | Status |
+| --- | --- |
+| [uBlock Origin Lite](#ublock-origin-lite) (Chrome, Edge and other Chromium browsers) | Working in maintainer testing with the setup below |
+| [uBlock Origin](#ublock-origin) | Core rules briefly tested |
+| [AdGuard Browser Extension](#adguard-browser-extension) | Setup per AdGuard's documentation; not tested with this list |
 
 ## uBlock Origin Lite
 
-Current Chromium versions: setup is available, but this list has not been tested in uBOL. See the [uBOL permissions notes](https://github.com/uBlockOrigin/uBOL-home/wiki/Justification-for-the-declared-permissions#userscripts).
+**Order matters: allow user scripts first, then add the list.**
 
-1. Open the uBO Lite dashboard and go to **Filter lists**.
-2. In the **Add filter list…** field, paste the main list URL and click **Add**. It appears under **Imported lists**.
-3. The cosmetic and cookie rules need extra permission. To enforce them, open your browser's extensions page (`chrome://extensions`), open the uBO Lite details, and turn on **Allow user scripts**.
-4. Reload Studydrive completely.
+1. Open `chrome://extensions` (Edge: `edge://extensions`), find **uBlock Origin Lite**, click **Details** and turn on **Allow user scripts**.
+2. Open the uBO Lite dashboard and go to **Filter lists**.
+3. Expand **Add filter list…**, paste the URL above and click **Add**. The list appears under **Imported lists**.
+4. Fully reload Studydrive (Ctrl+Shift+R, or Cmd+Shift+R on macOS).
 
-Use the list URL here. The manual **Custom filters > Import / Export** box only imports cosmetic filters, so pasting the whole file there will not load all rules. If you do not see the fields above, update uBO Lite or use full uBlock Origin.
+uBO Lite needs this permission to apply the hiding and cookie rules from imported lists ([why](https://github.com/uBlockOrigin/uBOL-home/wiki/Justification-for-the-declared-permissions#userscripts)).
+
+**Added the list before granting the permission?** If banners still appear, remove the list from **Imported lists**, make sure **Allow user scripts** is on, add the same URL again and fully reload. In testing, enabling the permission afterwards was not enough; re-adding the list fixed it.
+
+Use the **Add filter list…** field rather than **Custom filters > Import / Export**, which only accepts cosmetic filters. If the field is missing, update uBO Lite.
+
+## uBlock Origin
+
+1. Open the dashboard (gear icon in the popup) and go to **Filter lists**.
+2. Under **Custom**, tick **Import…**, paste the URL and click **Apply changes**.
+3. Fully reload Studydrive.
+
+Alternatively, open **My filters**, tick **Enable my custom filters** on that tab, paste the contents of [`studydrive-ublock.txt`](studydrive-ublock.txt) and click **Apply changes**. Pasted rules do not update automatically.
+
+Docs: [Filter lists](https://github.com/gorhill/uBlock/wiki/Dashboard:-Filter-lists) · [My filters](https://github.com/gorhill/uBlock/wiki/Dashboard:-My-filters)
 
 ## AdGuard Browser Extension
 
-Installation is documented by AdGuard; this list has not been tested in AdGuard. See [AdGuard custom filters](https://kb.adguard.com/kb/adguard-browser-extension/features/filters/) and the [scriptlet compatibility table](https://github.com/AdguardTeam/Scriptlets/blob/master/wiki/compatibility-table.md), which lists `set-cookie` as compatible with uBO.
+> Not tested with this list. The steps follow AdGuard's documentation.
 
-1. Open **Settings > Filters > Custom** and click **Add custom filter**.
-2. Paste the main list URL, click **Next**, then confirm and enable the filter.
-3. In the MV3 version, Settings > Filters > Custom may warn you to enable **Allow User Scripts** in the browser's extension settings. Do that, return to AdGuard, then add the filter. See the [release notes](https://adguard.com/en/versions/browser-extension/release.html).
-4. Reload Studydrive completely.
+1. If AdGuard asks you to enable **Allow User Scripts** (MV3 version), do that first.
+2. Go to **Settings > Filters > Custom**, enable the group if needed and click **Add custom filter**.
+3. Paste the URL, click **Next** and confirm the filter is enabled.
+4. Fully reload Studydrive.
 
-As a manual alternative, use **Settings > User rules**, import or paste the rules, and save.
-
-## Adblock Plus and AdBlock
-
-Full support is not expected, because the cookie rules use uBlock Origin's `+js(...)` scriptlet syntax. These blockers may take some rules (such as the network and hiding rules) but the full-screen ad fix cannot be assumed. This was not tested. Prefer one of the blockers above.
+Docs: [Custom filters](https://kb.adguard.com/kb/adguard-browser-extension/features/filters/) · [Release notes](https://adguard.com/en/versions/browser-extension/release.html) · [Scriptlet compatibility](https://github.com/AdguardTeam/Scriptlets/blob/master/wiki/compatibility-table.md)
 
 ## Limits
 
-- The filters hide ads and warnings. They do not change your account, Premium status, or download rights.
-- The main list was only briefly smoke-tested by a user. The Premium-banner rule was added afterward and checked only with local selector tests. It is not end-to-end tested with a logged-in account.
-- The document counter is set to a finite number (32767) on every full page load. Navigating inside the site without a full reload still lowers it.
-- Studydrive can change its page markup at any time, which can break individual rules.
+- Studydrive can change its pages at any time, which may break individual rules. If something reappears, please [open an issue](https://github.com/Skriipt/studydrive-adblock-filters/issues).
+- The full-screen ad fix resets on every full page load. Navigating within the site without reloading counts down a large but finite counter.
+- Testing so far covers the setups listed above, not every browser or account type.
 
-## Troubleshooting
+## Removal
 
-1. Click **Apply changes** (or save), then do a full reload of the page.
-2. Check that the list shows a non-zero count in your blocker's list settings.
-3. Make sure cosmetic filtering is not turned off for Studydrive.
-4. If an ad comes back, the site markup has probably changed. Please open an issue.
+Remove the list from your blocker and reload Studydrive. To also reset the full-screen ad state, delete only the `sd_fp_docs_left` and `sd_fp_until` cookies for `studydrive.net`. Clearing all site data also signs you out.
 
-## Uninstall
+## Related project
 
-1. Remove the list in your blocker's filter list settings (or delete the pasted rules), and apply.
-2. Optional: delete only the cookies `sd_fp_docs_left` and `sd_fp_until` for `studydrive.net` in your browser's cookie viewer.
+[Studydrive PDF Downloader](https://github.com/Skriipt/studydrive-pdfdownloader) is a Chromium extension that adds a **Download PDF** button for saving the document preview already loaded in your browser, which may have fewer pages than the original. It is a separate project; neither requires the other.
 
-Do not clear all site data. That also logs you out.
+## License
+
+[MIT](LICENSE)
