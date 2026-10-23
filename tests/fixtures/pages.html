@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Sanitized Studydrive component contracts</title>
+<style>
+  body { margin: 8px; font-family: sans-serif; }
+  .mx-auto { margin-inline: auto; } .mb-8 { margin-bottom: 32px; }
+  .spacing-v2 { margin: 24px 0; } .feed-placement { min-height: 30px; }
+</style>
+<!-- Source-derived nesting; invented text, IDs and data-expect annotations.
+     No account data, third-party scripts or external image requests. -->
+<nav id="navigation" data-expect="visible"><a href="#document-pdf-container">Documents</a></nav>
+<aside id="sidebar" data-expect="visible">
+  <a id="sidebar-premium" href="/de/subscription" data-expect="visible">
+    <span class="logo-studydrive-premium" data-testid="sidebar-logo-studydrive">Premium</span>
+  </a>
+</aside>
+<main>
+  <div data-testid="dashboard-index-view" id="dashboard" data-expect="visible">
+    <h1 data-expect="visible">Dashboard</h1>
+    <div id="dashboard-layout" data-expect="visible">
+      <div id="dashboard-widgets" data-expect="visible">
+        <div id="ad-wrapper" class="mx-auto mb-8" data-expect="hidden">
+          <div class="feed-placement" id="dashboard-ad" data-expect="hidden">
+            <div><div><div id="gam-slot-sd_desk_dashboard_pa-12"><a href="https://advertiser.example">Example advertiser</a></div></div></div>
+          </div>
+        </div>
+        <div id="premium-wrapper" class="mx-auto mb-8" data-expect="hidden">
+          <div id="premium-card" data-expect="hidden">
+            <div><p>Download documents with Premium.</p><button>Go Premium</button></div>
+            <div><div class="logo logo-studydrive-premium" data-testid="sidebar-logo-studydrive">Logo</div></div>
+          </div>
+        </div>
+        <div id="marketing-wrapper" class="mx-auto mb-8" data-expect="hidden">
+          <div id="dashboard-braze-banner-container" data-expect="hidden">Marketing</div>
+        </div>
+        <section id="recommendations" class="mx-auto mb-8" data-expect="visible">
+          <h2>Recommended documents</h2><a href="#document-pdf-container" data-expect="visible">Open document</a>
+        </section>
+        <article id="premium-discussion" class="mx-auto mb-8" data-expect="visible">
+          <p>Discussion about Premium and advertising</p><a href="/de/subscription">Premium information</a>
+          <img src="/images/ordinary-premium.svg" alt="An ordinary illustration" width="10" height="10">
+        </article>
+        <!-- Shared containers must survive even when they contain an ad. -->
+        <div id="mixed-dashboard" class="mx-auto mb-8" data-expect="visible">
+          <div class="feed-placement" data-expect="hidden"><div id="gam-slot-sd_desk_dashboard_pb-13"><a href="https://advertiser.example">Example advertiser</a></div></div>
+          <article id="mixed-article" data-expect="visible">A real recommendation</article>
+        </div>
+        <div id="empty-widget" class="mx-auto mb-8"></div>
+      </div>
+    </div>
+  </div>
+  <div data-testid="newsfeed-index-view" id="newsfeed" data-expect="visible">
+    <div id="feed-group" data-expect="visible">
+      <div><div class="feed-placement" id="feed-ad" data-expect="hidden">Ad</div></div>
+      <article id="post" data-expect="visible"><p>A useful post about Premium</p></article>
+    </div>
+  </div>
+  <div id="document-pdf-container" data-expect="visible">
+    <h1 data-expect="visible">Example document</h1>
+    <div id="document-preview" data-expect="visible">Document preview</div>
+    <button id="download" data-expect="visible">Download</button>
+  </div>
+  <div id="fallbacks">
+    <div id="renamed-ad-shell" class="placement-v2">
+      <div id="gam-slot-sd_mew_doc_pa-7" data-expect="hidden">Inline mobile ad</div>
+      <div id="gam-slot-sd_desk_newsfeed_pb-99" data-expect="hidden">Inline desktop ad</div>
+      <a id="replacement-banner" href="/de/subscription" data-expect="hidden">
+        <img src="/images/premium_spotlights/de/wide_spotlight_premium.svg" alt="Replacement banner">
+      </a>
+    </div>
+  </div>
+  <!-- CSS must not make fullscreen dialogs invisible while leaving scroll locked. -->
+  <div class="doc-fullscreen-spotlight" role="dialog" data-expect="visible">
+    <div id="gam-slot-sd_desk_doc_fp" data-expect="visible">Fullscreen desktop slot</div>
+    <div id="gam-slot-sd_mew_doc_fp-1" data-expect="visible">Fullscreen mobile slot</div>
+    <a id="fullscreen-fallback" href="/de/subscription" data-expect="visible">
+      <img src="/images/premium_spotlights/en/fullpage_video_premium.svg" alt="Fullscreen replacement">
+    </a>
+  </div>
+  <div role="dialog" id="account-dialog" data-expect="visible"><button>Account settings</button></div>
+</main>
+</html>

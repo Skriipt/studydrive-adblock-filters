@@ -1,30 +1,55 @@
 [Adblock Plus 2.0]
 ! Title: Studydrive – Ads and Premium Prompts
-! Version: 2026.10.23.2
+! Version: 2026.10.23.3
 ! Expires: 1 day
 ! Homepage: https://github.com/Skriipt/studydrive-adblock-filters
 ! License: MIT
-! Intended for full uBlock Origin. See README for other blockers.
-! Derived from shipped site code; briefly smoke-tested by a user.
+! For uBlock Origin and uBO Lite. See README for permissions and test coverage.
+! Source contracts checked 2026-10-23. See docs/maintenance.md for evidence and limits.
 
 ! Block Google Ad Manager scripts and delivery on Studydrive.
+! Rule: google-tag
 ||pagead2.googlesyndication.com^$domain=studydrive.net
+! Rule: google-delivery
 ||securepubads.g.doubleclick.net^$domain=studydrive.net
 
 ! Hide dashboard/newsfeed ad placements, including adblock fallback banners.
+! Rule: feed-placement
 studydrive.net##.feed-placement
 
-! Remove the dashboard ad wrapper and its spacing when the slot is present.
-studydrive.net##[data-testid="dashboard-index-view"] .mx-auto.mb-8:has(> .feed-placement)
+! Independent slot-ID fallback if presentation classes change. Exclude fullscreen
+! slots: hiding their contents alone would leave the dialog and scroll lock active.
+! Rule: inline-slot-fallback
+studydrive.net##:is([id^="gam-slot-sd_desk_"],[id^="gam-slot-sd_mew_"]):not([id^="gam-slot-sd_desk_doc_fp"]):not([id^="gam-slot-sd_mew_doc_fp"])
+
+! Recognize the dedicated inline replacement banner even if its outer class changes.
+! Deliberately exclude fullpage_video_premium.svg and generic Premium links/images.
+! Rule: inline-image-fallback
+studydrive.net##a:has(> img[src*="/images/premium_spotlights/"][src*="/wide_spotlight_premium.svg"])
+
+! Collapse only a dashboard wrapper whose sole element child is the ad component.
+! No spacing classes, ancestor counts or shared newsfeed group removal.
+! Rule: dashboard-ad-wrapper
+studydrive.net##[data-testid="dashboard-index-view"] div:has(> .feed-placement:only-child)
 
 ! Hide the large dashboard Premium banner and spacing; keep the sidebar link.
-studydrive.net##[data-testid="dashboard-index-view"] .mx-auto.mb-8:has(.logo-studydrive-premium[data-testid="sidebar-logo-studydrive"])
+! Match exactly two columns: text first, logo last. Keep shared content visible.
+! Either logo marker may survive a rename; neither alone identifies a whole card.
+! Rule: dashboard-premium-card
+studydrive.net##[data-testid="dashboard-index-view"] div:has(> div:first-child > p):has(> div:first-child + div:last-child :is(.logo-studydrive-premium,[data-testid="sidebar-logo-studydrive"])):not(:has(article,section,nav,aside,form))
+! Rule: dashboard-premium-wrapper
+studydrive.net##[data-testid="dashboard-index-view"] div:has(> div:only-child > div:first-child > p):has(> div:only-child > div:first-child + div:last-child :is(.logo-studydrive-premium,[data-testid="sidebar-logo-studydrive"])):not(:has(article,section,nav,aside,form))
 
 ! Hide the dashboard marketing banner; this is separate from the sidebar link.
+! Rule: dashboard-marketing
 studydrive.net###dashboard-braze-banner-container
+! Rule: dashboard-marketing-wrapper
+studydrive.net##[data-testid="dashboard-index-view"] div:has(> #dashboard-braze-banner-container:only-child)
 
 ! Prevent document fullscreen ads before they open and lock scrolling.
 ! Reset the document counter to 32767 on each full page load.
 ! Clear any existing close countdown.
+! Rule: fullscreen-counter
 studydrive.net##+js(set-cookie, sd_fp_docs_left, 32767)
+! Rule: fullscreen-countdown
 studydrive.net##+js(set-cookie, sd_fp_until, 0)

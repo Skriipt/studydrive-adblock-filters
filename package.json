@@ -1,0 +1,12 @@
+{
+  "name": "studydrive-adblock-filters",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs && playwright test",
+    "check:upstream": "node scripts/check-upstream.mjs",
+    "check:live": "node scripts/check-live.mjs"
+  },
+  "devDependencies": { "@playwright/test": "1.64.1" }
+}
