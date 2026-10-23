@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-labelledby="title desc">
+  <title id="title">Studydrive: a filter for the ad slot</title>
+  <desc id="desc">A real rule, studydrive.net##.feed-placement, beside a schematic of documents and discussion with an ad slot crossed out. This is an illustration, not a live screenshot.</desc>
+  <rect width="1200" height="340" rx="20" fill="#f4f5ef"/>
+  <g id="filter-specimen" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+    <text x="56" y="66" font-size="24" font-weight="600" letter-spacing="2" fill="#597068">STUDYDRIVE / FILTER LIST</text>
+    <text x="56" y="145" font-size="56" font-weight="700" letter-spacing="-1.5" fill="#18332e">Hide the ad slot.</text>
+    <text x="56" y="195" font-size="30" fill="#597068">A small rule. A quieter page.</text>
+    <path d="M56 238 H668" stroke="#c5d6cc" stroke-width="2"/>
+    <text x="56" y="285" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="28" fill="#176c57">studydrive.net##.feed-placement</text>
+  </g>
+  <g id="content-schematic" transform="translate(772 44)" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+    <rect width="372" height="66" rx="12" fill="#dce9e1"/>
+    <path d="M24 20 H44 V46 H24 Z M29 27 H39 M29 34 H39" fill="none" stroke="#176c57" stroke-width="2"/>
+    <text x="66" y="44" font-size="32" font-weight="600" fill="#18332e">Documents</text>
+    <rect y="86" width="372" height="66" rx="12" fill="none" stroke="#9eb3a8" stroke-width="2" stroke-dasharray="7 7"/>
+    <text x="66" y="130" font-size="32" fill="#597068">Ad slot</text>
+    <path d="M58 118 H206 M-16 92 H-26 V146 H-16" fill="none" stroke="#176c57" stroke-width="3"/>
+    <rect y="172" width="372" height="66" rx="12" fill="#dce9e1"/>
+    <path d="M24 194 H46 V210 H34 L28 216 V210 H24 Z" fill="none" stroke="#176c57" stroke-width="2"/>
+    <text x="66" y="216" font-size="32" font-weight="600" fill="#18332e">Discussion</text>
+    <text x="0" y="274" font-size="20" letter-spacing="1" fill="#597068">SCHEMATIC · NOT A SCREENSHOT</text>
+  </g>
+</svg>

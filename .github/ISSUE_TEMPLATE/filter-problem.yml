@@ -1,0 +1,44 @@
+name: Ad visible or useful content hidden
+description: Report a missed banner, broken layout or incorrectly hidden feature.
+body:
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What happened?
+      options:
+        - An ad or Premium banner is visible
+        - Useful content or a feature is hidden/broken
+        - The page cannot scroll
+        - The list does not install or update
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page URL or page type
+      description: Remove private query parameters. Dashboard, newsfeed or document is enough for private pages.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Browser, blocker and list versions
+      placeholder: Browser/version; uBO, uBO Lite or AdGuard/version; list Version header
+    validations:
+      required: true
+  - type: dropdown
+    id: session
+    attributes:
+      label: Session
+      options:
+        - Signed in, free account
+        - Signed in, Premium account
+        - Signed out
+        - Prefer not to say
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps and expected result
+      description: Include page language, desktop/mobile, full reload vs in-site navigation, and whether removing this list fixes the problem. Redact personal data in screenshots; never attach cookies or login exports.
+    validations:
+      required: true

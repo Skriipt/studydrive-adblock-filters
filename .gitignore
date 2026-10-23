@@ -6,3 +6,9 @@ Thumbs.db
 evidence/
 verify-filters.mjs
 STUDYDRIVE-ANALYSE.md
+node_modules/
+test-results/
+playwright-report/
+.auth/
+.env
+.env.*

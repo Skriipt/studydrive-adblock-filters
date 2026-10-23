@@ -1,0 +1,59 @@
+name: Upstream drift and browser observations
+on:
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - run: npm run check:upstream
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: public-source-observations
+          path: test-results/upstream.json
+          retention-days: 14
+  collect-browser-observations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Collect CSS coverage (guest visits may be inconclusive)
+        shell: bash
+        run: |
+          status=0
+          npm run check:live || status=$?
+          node --input-type=module <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const report = JSON.parse(readFileSync('test-results/live.json', 'utf8'));
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            `## Live CSS coverage: ${report.status}\n\n` +
+            'Guest visits do not validate authenticated blocking or extension compatibility.\n\n' +
+            report.results.map(r => `- ${r.page ?? 'setup'} ${r.width ?? ''}: **${r.status}**${r.reason ? ` — ${r.reason}` : ''}` +
+              (r.components?.length ? ` (${r.components.map(c => `${c.id}: ${c.status}`).join('; ')})` : '')).join('\n') + '\n');
+          JS
+          if [ "$status" -eq 2 ]; then
+            echo '::warning::Live coverage is INCONCLUSIVE, not a blocking pass. See the job summary.'
+          else
+            exit "$status"
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: live-css-observations
+          path: test-results/live.json
+          retention-days: 14
