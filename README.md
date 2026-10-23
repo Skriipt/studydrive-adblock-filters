@@ -61,8 +61,8 @@ For a one-off local test, paste the contents of [`studydrive-ublock.txt`](studyd
 
 | Blocker | Evidence |
 | --- | --- |
-| uBlock Origin | Earlier list user-tested; current revision needs an extension recheck |
-| uBlock Origin Lite | Earlier list user-tested; current revision needs an extension recheck |
+| uBlock Origin | Tested and works |
+| uBlock Origin Lite | Tested and works |
 | AdGuard | Installation documented; list-specific testing pending |
 
 The current revision has automated desktop/mobile CSS tests and checks against public Studydrive source code. **Those checks do not replace an authenticated test with the actual extension.** Live guest observations remain inconclusive. Exact environments and limits are recorded in [maintenance](docs/maintenance.md#compatibility-evidence).
