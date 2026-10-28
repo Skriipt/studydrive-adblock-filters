@@ -8,9 +8,13 @@ try {
   const documentURL = studydriveURL(process.env.STUDYDRIVE_DOCUMENT_URL || defaultDocumentURL);
   const mainURL = discoverMain(await fetchPublicText(documentURL), documentURL);
   const main = await fetchPublicText(mainURL);
+  const sources = new Map();
   for (const contract of sourceContracts) {
-    const url = contract.entry ? mainURL : discoverChunk(main, contract.prefix);
+    const parent = contract.parent ? sources.get(contract.parent) : main;
+    if (!parent) throw new Error(`Missing parent source for ${contract.name}`);
+    const url = contract.entry ? mainURL : discoverChunk(parent, contract.prefix);
     const source = contract.entry ? main : await fetchPublicText(url);
+    if (contract.prefix) sources.set(contract.prefix, source);
     const missing = checkMarkers(source, contract.markers);
     report.checks.push({ name: contract.name, url, sha256: createHash('sha256').update(source).digest('hex'), missing });
     if (missing.length) report.status = 'drift';

@@ -73,3 +73,16 @@ test('newsfeed integration drift is checked independently of the ad component', 
   assert.deepEqual(checkMarkers(integration, contract.markers), []);
   assert.deepEqual(checkMarkers(integration.replace('FeedStickySpotlightGroup', 'NewLayout'), contract.markers), ['FeedStickySpotlightGroup']);
 });
+
+test('document inline integration is discovered from the document view and checked independently', () => {
+  const contract = sourceContracts.find(c => c.prefix === 'assets/views/DocumentShowDocument');
+  assert.ok(contract, 'DocumentShowDocument must be inspected');
+  assert.equal(contract.parent, 'assets/views/DocumentShow');
+  const parent = '"assets/views/DocumentShowDocument-NEW.js"';
+  assert.equal(discoverChunk(parent, contract.prefix), 'https://www.studydrive.net/assets/views/DocumentShowDocument-NEW.js');
+  const integration = 'docBannerTopKey,variant:"banner" docBannerBottomKey,variant:"banner" showDocBanners';
+  assert.deepEqual(checkMarkers(integration, contract.markers), []);
+  for (const marker of contract.markers) {
+    assert.deepEqual(checkMarkers(integration.replaceAll(marker, 'removed'), contract.markers), [marker]);
+  }
+});
