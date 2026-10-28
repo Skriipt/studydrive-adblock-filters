@@ -19,7 +19,7 @@ The logged-out homepage serves a different Nuxt frontend. A public document page
 | --- | --- |
 | `google-tag`, `google-delivery` | Existing site-scoped Google ad delivery rules retained. Main bundle points to Google's GPT script. No new network hosts added. |
 | `feed-placement`, `dashboard-ad-wrapper` | `SpotlightFeed` root is `.feed-placement`; dashboard `LazyLoad` renders a dedicated wrapping `div`. The newsfeed group also contains posts, so no group removal. |
-| `inline-slot-fallback` | Main builds `gam-slot-${placementKey}`; components generate `sd_desk`/`sd_mew` placements. Exclude both `doc_fp` prefixes, including suffixed IDs. |
+| `inline-slot-fallback` | Main builds `gam-slot-${placementKey}`; components generate `sd_desk`/`sd_mew` placements. The document view's nested `DocumentShowDocument` chunk integrates the top and bottom inline banners. Exclude both `doc_fp` prefixes, including suffixed IDs. |
 | `inline-image-fallback` | Inline fallback is an anchor directly containing an image under `/images/premium_spotlights/{de,en}/wide_spotlight_premium.svg`. Fullscreen uses a different filename. |
 | `dashboard-premium-card`, `dashboard-premium-wrapper` | `PremiumSpotlight` has exactly two element columns: text first and logo last. Logo has both `.logo-studydrive-premium` and `data-testid="sidebar-logo-studydrive"`. Extra logo wrappers are tolerated; an extra column or nested article/section/navigation/form prevents hiding the container. |
 | `dashboard-marketing`, `dashboard-marketing-wrapper` | `DashboardWidgetBrazeBanner` renders `#dashboard-braze-banner-container` inside the dashboard's lazy wrapper. |
@@ -52,7 +52,7 @@ The offline suite tests the actual selectors both independently and together. It
 
 The small parser accepts only this project's domain-scoped network rules, native CSS and two `set-cookie` scriptlets. Unknown syntax fails. It is not a full uBO/AdGuard parser. Browser tests validate CSS; cookie tests protect the allowed names/values, not extension execution or timing.
 
-`npm run check:upstream` fetches the public document and eight current JS files, sequentially with request timeouts. The NewsfeedIndex integration is checked separately from the reusable ad component. Missing markers or an unavailable page fail the command. Reports include public asset URLs, SHA-256 values and missing markers, not source contents or the supplied document path. Request/response errors are sanitized before reporting.
+`npm run check:upstream` fetches the public document and nine current JS files, sequentially with request timeouts. The NewsfeedIndex and document inline integrations are checked separately from the reusable ad component; the document chunk is discovered through its parent view. Missing markers or an unavailable page fail the command. Reports include public asset URLs, SHA-256 values and missing markers, not source contents or the supplied document path. Request/response errors are sanitized before reporting.
 
 `npm run check:live` visits dashboard, newsfeed and a public document at both viewport sizes in disposable browser contexts. It samples lazy content with one scroll, records selector matches, temporarily applies the cosmetic rules, and checks that previously visible content landmarks remain visible. It removes its CSS afterwards. It does not click consent buttons, write ad cookies, submit forms or install an extension; the site itself may perform its usual visit tracking.
 

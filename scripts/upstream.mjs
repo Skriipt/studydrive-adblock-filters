@@ -63,6 +63,9 @@ export const sourceContracts = [
   { name: 'document viewer and fullscreen boundary', prefix: 'assets/views/DocumentShow', markers: [
     'document-pdf-container', 'doc-fullscreen-spotlight', '_doc_fp', 'hasSpotlightObstruction',
   ] },
+  { name: 'document inline placement integration', prefix: 'assets/views/DocumentShowDocument', parent: 'assets/views/DocumentShow', markers: [
+    'docBannerTopKey,variant:"banner"', 'docBannerBottomKey,variant:"banner"', 'showDocBanners',
+  ] },
   { name: 'fullscreen counter consumption', prefix: 'assets/misc/linkify', markers: [
     'DOCS_UNTIL_FULLSCREEN', 'FULLSCREEN_CLOSE_LOCK', 'hasObstruction', 'isOwner', 'Math.max(0,',
   ] },
